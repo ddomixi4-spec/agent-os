@@ -10,7 +10,7 @@ export function createLogger(name: string, level = 'info'): Logger {
       ? {
           transport: {
             target: 'pino/file',
-            options: { destination: 1 },
+            options: { destination: 2 }, // stderr — never bleeds into stdout/REPL
           },
         }
       : {}),

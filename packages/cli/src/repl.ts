@@ -3,7 +3,20 @@ import type { AgentEngine, SkillLoader, TieredStore, HAMCompressor } from '@agen
 import type { LLMProvider } from '@agent-os/shared';
 import { isCommand, handleCommand, type CommandContext } from './commands/index.js';
 
-const PROMPT = '\x1b[36m>\x1b[0m ';
+// ANSI helpers
+const dim = (s: string) => `\x1b[2m${s}\x1b[0m`;
+const cyan = (s: string) => `\x1b[36m${s}\x1b[0m`;
+const bold = (s: string) => `\x1b[1m${s}\x1b[0m`;
+const red = (s: string) => `\x1b[31m${s}\x1b[0m`;
+const green = (s: string) => `\x1b[32m${s}\x1b[0m`;
+const yellow = (s: string) => `\x1b[33m${s}\x1b[0m`;
+
+const PROMPT = `${cyan('❯')} `;
+
+const PROVIDER_COLOR: Record<string, (s: string) => string> = {
+  claude: cyan,
+  gemini: green,
+};
 
 export class Repl {
   private readonly rl: readline.Interface;
@@ -27,14 +40,17 @@ export class Repl {
     });
 
     this.rl.on('SIGINT', () => {
-      process.stdout.write('\nGoodbye.\n');
+      process.stdout.write('\n' + dim('Goodbye.') + '\n');
       this.rl.close();
       process.exit(0);
     });
   }
 
   async run(): Promise<void> {
-    process.stdout.write('\x1b[1mAgentOS\x1b[0m — type /help for commands\n\n');
+    process.stdout.write('\n');
+    process.stdout.write(bold('  AgentOS') + dim('  ·  type /help for commands') + '\n');
+    process.stdout.write(dim('  ─────────────────────────────────\n'));
+    process.stdout.write('\n');
 
     while (true) {
       let input: string;
@@ -71,8 +87,10 @@ export class Repl {
 
     let inputTokens = 0;
     let outputTokens = 0;
-    let usedModel = 'claude';
+    let provider = 'claude';
     let hasOutput = false;
+
+    process.stdout.write('\n');
 
     try {
       for await (const chunk of this.engine.chat({
@@ -88,21 +106,26 @@ export class Repl {
           outputTokens = chunk.usage.outputTokens;
         } else if (chunk.type === 'tool_call' && chunk.toolCall) {
           process.stdout.write(
-            `\n\x1b[2m[calling tool: ${chunk.toolCall.name}]\x1b[0m\n`,
+            `\n${dim(`  ⚙ ${chunk.toolCall.name}`)}\n`,
           );
         } else if (chunk.type === 'done') {
           break;
         }
       }
     } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : String(err);
-      process.stdout.write(`\n\x1b[31mError: ${message}\x1b[0m\n`);
+      const msg = err instanceof Error ? err.message : String(err);
+      process.stdout.write(`\n${red(`  ✗ ${msg}`)}\n\n`);
       return;
     }
 
     if (hasOutput) {
+      const colorFn = PROVIDER_COLOR[provider] ?? yellow;
+      const total = inputTokens + outputTokens;
+      const tokenInfo = total > 0
+        ? dim(` · ${inputTokens}↑ ${outputTokens}↓ tokens`)
+        : '';
       process.stdout.write(
-        `\n\n\x1b[2m[model: ${usedModel} | in: ${inputTokens} out: ${outputTokens} tokens]\x1b[0m\n`,
+        `\n\n${dim('  ─')} ${colorFn(provider)}${tokenInfo}\n\n`,
       );
     }
   }
