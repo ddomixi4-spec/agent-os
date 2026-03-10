@@ -40,8 +40,9 @@ export interface ToolResult {
 }
 
 export interface StreamChunk {
-  type: 'text' | 'tool_call' | 'tool_result' | 'usage' | 'done';
+  type: 'text' | 'tool_call' | 'tool_result' | 'usage' | 'provider' | 'done';
   content?: string;
+  provider?: LLMProvider;
   toolCall?: ToolCall;
   toolResult?: ToolResult;
   usage?: {

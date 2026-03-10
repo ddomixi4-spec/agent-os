@@ -55,6 +55,9 @@ export class AgentEngine {
     const effectiveModel = input.forceModel ?? input.agentProfile?.defaultModel;
     const provider = await this.router.route(input.message, effectiveModel);
 
+    // Emit provider so clients can display which model is responding
+    yield { type: 'provider', provider };
+
     // Ensure conversation row exists before inserting messages (web route passes a bare UUID)
     this.memory.ensureConversation(input.conversationId);
 

@@ -98,7 +98,9 @@ export class Repl {
         message,
         forceModel,
       })) {
-        if (chunk.type === 'text' && chunk.content) {
+        if (chunk.type === 'provider' && chunk.provider) {
+          provider = chunk.provider;
+        } else if (chunk.type === 'text' && chunk.content) {
           process.stdout.write(chunk.content);
           hasOutput = true;
         } else if (chunk.type === 'usage' && chunk.usage) {
