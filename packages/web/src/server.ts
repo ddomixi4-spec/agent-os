@@ -29,9 +29,7 @@ export function createServer(deps: ServerDeps): Hono {
   app.route('/chat', chatRoute(engine, agents, logger));
   app.route('/conversations', conversationsRoute(engine, memory));
 
-  if (hamStore) {
-    app.route('/memory', memoryRoute(hamStore));
-  }
+  app.route('/memory', memoryRoute(hamStore));
 
   app.notFound((c) => c.json({ error: 'Not found' }, 404));
   app.onError((err, c) => {

@@ -3,10 +3,11 @@ import type { TieredStore } from '@agent-os/core';
 
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
-export function memoryRoute(hamStore: TieredStore): Hono {
+export function memoryRoute(hamStore?: TieredStore): Hono {
   const app = new Hono();
 
   app.get('/chunks', (c) => {
+    if (!hamStore) return c.json({ chunks: [] });
     try {
       const chunks = hamStore.listChunks();
       return c.json({ chunks });
@@ -17,6 +18,7 @@ export function memoryRoute(hamStore: TieredStore): Hono {
   });
 
   app.get('/chunks/:id', (c) => {
+    if (!hamStore) return c.json({ error: 'Memory not initialized' }, 503);
     const id = c.req.param('id');
     if (!UUID_RE.test(id)) {
       return c.json({ error: 'Invalid chunk ID format' }, 400);

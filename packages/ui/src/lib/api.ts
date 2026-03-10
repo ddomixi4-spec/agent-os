@@ -133,12 +133,12 @@ export function streamChat(
           if (!raw) continue;
           try {
             const parsed = JSON.parse(raw) as {
-              type: 'chunk' | 'done';
+              type: string;
               content?: string;
               conversationId?: string;
               provider?: string;
             };
-            if (parsed.type === 'chunk' && parsed.content) {
+            if (parsed.type === 'text' && parsed.content) {
               onChunk(parsed.content);
             } else if (parsed.type === 'done') {
               onDone(parsed.conversationId ?? '', parsed.provider ?? 'claude');

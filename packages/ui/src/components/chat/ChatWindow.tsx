@@ -7,6 +7,7 @@ import type { ChatMessage } from '@/lib/hooks/useChat';
 interface ChatWindowProps {
   messages: ChatMessage[];
   isStreaming: boolean;
+  onPromptClick?: (text: string) => void;
 }
 
 const EXAMPLE_PROMPTS = [
@@ -53,7 +54,7 @@ function StreamingIndicator() {
   );
 }
 
-export function ChatWindow({ messages, isStreaming }: ChatWindowProps) {
+export function ChatWindow({ messages, isStreaming, onPromptClick }: ChatWindowProps) {
   const bottomRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -68,7 +69,7 @@ export function ChatWindow({ messages, isStreaming }: ChatWindowProps) {
   return (
     <div className="flex-1 overflow-y-auto px-4 py-6">
       {!hasMessages ? (
-        <EmptyState />
+        <EmptyState onPromptClick={onPromptClick} />
       ) : (
         <div className="max-w-3xl mx-auto">
           {messages.map((msg) => (

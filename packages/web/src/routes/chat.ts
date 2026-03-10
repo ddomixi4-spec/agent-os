@@ -47,7 +47,10 @@ export function chatRoute(
           agentProfile,
         })) {
           if (chunk.type === 'done') {
-            await stream.writeSSE({ event: 'done', data: '' });
+            await stream.writeSSE({
+              event: 'done',
+              data: JSON.stringify({ type: 'done', conversationId }),
+            });
             break;
           }
           await stream.writeSSE({

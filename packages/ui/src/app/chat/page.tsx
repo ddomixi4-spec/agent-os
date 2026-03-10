@@ -17,7 +17,7 @@ export default function ChatPage() {
           </span>
         )}
       </div>
-      <ChatWindow messages={messages} isStreaming={isStreaming} />
+      <ChatWindow messages={messages} isStreaming={isStreaming} onPromptClick={sendMessage} />
       <ChatInput onSend={sendMessage} isDisabled={isStreaming} />
     </div>
   );
