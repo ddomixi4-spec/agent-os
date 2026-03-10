@@ -1,5 +1,7 @@
 #!/usr/bin/env node
-import 'dotenv/config';
+import dotenv from 'dotenv';
+import { resolve } from 'node:path';
+dotenv.config({ path: resolve(process.cwd(), '../../.env') });
 import { loadConfig } from '@agent-os/shared';
 import { bootstrap } from '@agent-os/core';
 import { Repl } from './repl.js';

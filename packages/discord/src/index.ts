@@ -1,4 +1,6 @@
-import 'dotenv/config';
+import dotenv from 'dotenv';
+import { resolve } from 'node:path';
+dotenv.config({ path: resolve(process.cwd(), '../../.env') });
 import { loadConfig, createLogger } from '@agent-os/shared';
 import { bootstrap } from '@agent-os/core';
 import { createBot } from './bot.js';
